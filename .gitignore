@@ -37,3 +37,4 @@ ios/Export/
 *.swp
 *.swo
 .DS_Store
+builds/
