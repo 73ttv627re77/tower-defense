@@ -42,13 +42,15 @@ The project is built in two phases.
 |---|---|---|---|---|---|---|
 | Archer | Basic physical, fast single-target | 50g | 120px | 8 | 1.2s | — |
 | Mage | Magical AoE, slow | 100g | 100px | 25 | 2.0s | 40px AoE |
-| Ballista | Heavy physical, long range, single-target | 150g | 200px | 60 | 3.0s | +50% crit |
+| Trebuchet | Heavy siege, long range, AoE, slow | 150g | 200px | 60 | 3.0s | 50px splash AoE |
+
+> **Note on naming:** the original prototype spec called this slot "ballista" but M3's image-01 couldn't reliably render the wide horizontal crossbow silhouette. Pivoted to **trebuchet**, which has an unambiguous low-wide A-frame silhouette. Gameplay role unchanged: heavy, long-range, AoE.
 
 ### Full-scope (8 archetypes, 3 tiers each)
 
 1. **Archer** — basic physical, fast single-target
 2. **Mage** — magical AoE, slow
-3. **Ballista** — heavy physical single-target, long range
+3. **Trebuchet** — heavy siege, long range, AoE, slow (replaces original "ballista" slot)
 4. **Cannon** — siege, AoE, slow
 5. **Frost** — magical, slows enemies
 6. **Lightning** — magical, chains between enemies
