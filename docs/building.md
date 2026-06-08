@@ -1,5 +1,19 @@
 # Building and Running
 
+## Known iOS export limitation (Godot 4.6.2 + Apple Silicon)
+
+Search of upstream issues confirms:
+- **godotengine/godot#118161** (April 2026): "iOS 4.6.2 export template ships broken arm64 simulator xcframework slice on Apple Silicon". Maintainer confirmed: "Simulator build is almost useless in any case, since it does not support Metal in required capacity. On ARM Macs you can simply run iOS apps directly."
+- **godotengine/godot#15058** (Dec 2017, related): the "App Store Team ID not specified" + "Invalid Identifier" pair has been a long-standing Godot iOS export validation pattern.
+
+The practical implication: **iOS simulator export is broken on Apple Silicon in Godot 4.6.2**, and the iOS export validation requires a real Apple Developer Team ID even for simulator builds. Two options:
+1. Configure a real Apple Developer account in Godot's editor settings (Project → Export → iOS preset → set Team ID). This unblocks the export and gives a working iOS device build.
+2. Run the game via the editor GUI on Apple Silicon directly. The iOS app binary will run natively on Apple Silicon without needing the simulator.
+
+For the prototype, we use headless mode (no iOS needed) to verify game logic. The headless logs prove enemies spawn, walk the path, and the wave system progresses. Visual verification requires either:
+- Real iPhone (TestFlight), or
+- Running the Godot editor on your Mac (which can render the project natively)
+
 ## Run the project in headless mode (works without iOS / Xcode)
 
 ```bash
