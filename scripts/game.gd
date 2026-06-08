@@ -8,22 +8,23 @@ class_name Game
 @export var player_hp: int = 20
 
 # Wave definitions: each wave is a list of (enemy_scene, count, interval) tuples
+# Levels progress in difficulty: fodder -> mixed -> speed + flying -> miniboss
 const WAVE_DEFINITIONS: Array = [
-	# Level 1: tutorial wave
+	# Level 1: tutorial wave (5 moss-beasts, 5 seconds total)
 	[{"enemy": "mossbeast", "count": 5, "interval": 1.0}],
-	# Level 2: skeletons join
+	# Level 2: skeletons join (4+4 over ~9 seconds)
 	[{"enemy": "mossbeast", "count": 4, "interval": 1.0},
 	 {"enemy": "skeleton", "count": 4, "interval": 1.2}],
-	# Level 3: gnolls force path coverage
+	# Level 3: gnolls force path coverage (3 groups, faster pace)
 	[{"enemy": "mossbeast", "count": 4, "interval": 0.9},
 	 {"enemy": "gnoll", "count": 4, "interval": 0.7},
 	 {"enemy": "skeleton", "count": 4, "interval": 1.1}],
-	# Level 4: harpies
+	# Level 4: harpies join (flying, only ranged towers can hit)
 	[{"enemy": "mossbeast", "count": 4, "interval": 0.8},
 	 {"enemy": "harpy", "count": 3, "interval": 0.9},
 	 {"enemy": "gnoll", "count": 4, "interval": 0.7},
 	 {"enemy": "skeleton", "count": 4, "interval": 1.0}],
-	# Level 5: brute miniboss
+	# Level 5: brute miniboss finale (1 brute, 14 fodder)
 	[{"enemy": "skeleton", "count": 5, "interval": 0.7},
 	 {"enemy": "gnoll", "count": 5, "interval": 0.5},
 	 {"enemy": "harpy", "count": 4, "interval": 0.6},
