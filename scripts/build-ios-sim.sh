@@ -1,55 +1,57 @@
 #!/bin/bash
 # build-ios-sim.sh
-# Build the Tower Defense iOS Simulator .app and install it on the
-# iPhone 17 Pro simulator (DB94ECCE-F5B6-4F33-AB1F-6EBE5A8576CD).
-#
-# Prerequisites:
-#   - Godot 4.6.3-stable export template patched with arm64 sim slice (one-time, see scripts/build-ios-sim-template.sh)
-#   - Xcode 26.5+ with iOS 26.5 simulator SDK
-#   - Apple Development signing identity in keychain (Yura Zaicev, team 56EXG84N59)
-#   - The project has been exported at least once with `godot --export-debug iOS`
+# End-to-end build, install, and launch of Tower Defence on the iOS Simulator.
 #
 # This script:
-#   1. Re-exports the iOS preset from Godot
-#   2. Patches the regenerated .xcodeproj (see patch-ios-xcodeproj-for-sim.sh)
-#   3. Patches the regenerated tower-defense-ios.xcframework sim slice
-#   4. Runs xcodebuild for iphonesimulator
-#   5. Installs on the sim and launches
-#   6. Screenshots the result
+#   1. Re-exports the iOS preset from Godot (regenerates the pck and xcodeproj)
+#   2. Patches the regenerated xcodeproj so sim builds link the sim Swift runtime
+#   3. Patches the regenerated xcframework sim slice
+#   4. Runs xcodebuild for iphonesimulator (Release, arm64)
+#   5. Reinstalls on the sim and launches
+#   6. Takes a screenshot of the running game
+#
+# IMPORTANT: Godot regenerates the .xcodeproj on every export, so the patch
+# must run AFTER the export. The pbxproj is gitignored; this script is the
+# reproducible way to set it up.
+#
+# Prerequisites:
+#   - Custom sim export template installed (scripts/build-ios-sim-template.sh)
+#   - Apple Development cert in keychain (Yura Zaicev, team 56EXG84N59)
+#   - iPhone 17 Pro sim (DB94ECCE-F5B6-4F33-AB1F-6EBE5A8576CD) booted
 
 set -e
+
 cd "$(dirname "$0")/.."
 
-SIM=DB94ECCE-F5B6-4F33-AB1F-6EBE5A8576CD
-BUILD_DIR="/tmp/godot-4.6.3-build/godot"
-SIM_A="$BUILD_DIR/bin/libgodot.ios.template_release.arm64.simulator.a"
-DERIVED=/tmp/td-sim-build
+SIM="${SIM:-DB94ECCE-F5B6-4F33-AB1F-6EBE5A8576CD}"
+GODOT_BUILD="${GODOT_BUILD:-/tmp/godot-4.6.3-build/godot}"
+SIM_A="$GODOT_BUILD/bin/libgodot.ios.template_release.arm64.simulator.a"
 
 echo "=== 1. Export iOS preset from Godot ==="
 godot --headless --export-debug "iOS" "builds/tower-defense-ios.zip" 2>&1 | tail -3
 
 echo ""
-echo "=== 2. Patch the regenerated .xcodeproj for sim linking ==="
-./scripts/patch-ios-xcodeproj-for-sim.sh builds/tower-defense-ios.xcodeproj
+echo "=== 2. Patch the regenerated xcodeproj ==="
+./scripts/patch-ios-xcodeproj-for-sim.sh
 
 echo ""
-echo "=== 3. Patch the regenerated .xcodeproj's xcframework sim slice ==="
+echo "=== 3. Patch the regenerated xcframework sim slice ==="
 if [ ! -f "$SIM_A" ]; then
   echo "❌ Sim .a not found at $SIM_A. Run scripts/build-ios-sim-template.sh first."
   exit 1
 fi
 cp "$SIM_A" builds/tower-defense-ios.xcframework/ios-arm64_x86_64-simulator/libgodot.a
-lipo -info builds/tower-defense-ios.xcframework/ios-arm64_x86_64-simulator/libgodot.a
+echo "Patched: $(file builds/tower-defense-ios.xcframework/ios-arm64_x86_64-simulator/libgodot.a | awk -F: '{print $2}')"
 
 echo ""
 echo "=== 4. xcodebuild for iphonesimulator (Release, arm64) ==="
-rm -rf "$DERIVED"
+rm -rf /tmp/td-sim-build
 xcodebuild \
   -project builds/tower-defense-ios.xcodeproj \
   -scheme tower-defense-ios \
   -configuration Release \
   -destination 'generic/platform=iOS Simulator' \
-  -derivedDataPath "$DERIVED" \
+  -derivedDataPath /tmp/td-sim-build \
   -allowProvisioningUpdates \
   CODE_SIGN_IDENTITY="Apple Development: Yura Zaicev (77VA59EFJX)" \
   CODE_SIGNING_ALLOWED=YES \
@@ -58,21 +60,22 @@ xcodebuild \
   ARCHS=arm64 \
   build 2>&1 | tail -3
 
-SIM_APP="$DERIVED/Build/Products/Release-iphonesimulator/tower-defense-ios.app"
+SIM_APP="/tmp/td-sim-build/Build/Products/Release-iphonesimulator/tower-defense-ios.app"
 if [ ! -f "$SIM_APP/tower-defense-ios" ]; then
   echo "❌ Build did not produce $SIM_APP/tower-defense-ios"
   exit 1
 fi
 
 echo ""
-echo "=== 5. Install on $SIM and launch ==="
+echo "=== 5. Reinstall and launch on sim ==="
 xcrun simctl uninstall "$SIM" com.godotengine.towerdefense 2>&1 || true
 xcrun simctl install "$SIM" "$SIM_APP" 2>&1
 xcrun simctl launch "$SIM" com.godotengine.towerdefense 2>&1
 sleep 4
-xcrun simctl spawn "$SIM" launchctl list 2>&1 | grep -i tower-defense
 
 echo ""
-echo "=== 6. Screenshot ==="
-xcrun simctl io "$SIM" screenshot /tmp/td-sim-build.png 2>&1 | tail -1
-ls -la /tmp/td-sim-build.png 2>&1
+echo "=== 6. Process status and screenshot ==="
+xcrun simctl spawn "$SIM" launchctl list 2>&1 | grep -i tower-defense || echo "(process not yet visible)"
+xcrun simctl io "$SIM" screenshot /tmp/td-sim-build-result.png 2>&1 | tail -1
+ls -la /tmp/td-sim-build-result.png
+echo "Done. Screenshot saved to /tmp/td-sim-build-result.png"
