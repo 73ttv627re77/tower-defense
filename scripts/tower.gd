@@ -17,10 +17,10 @@ class_name Tower
 @export var cooldown_s: float = 1.2
 @export var projectile_speed: float = 600.0
 @export var projectile_color: Color = Color(0.9, 0.85, 0.5, 1.0)
-@export var sprite_path: String = "res://assets/towers/archer.jpg"
+@export var sprite_path: String = "res://assets/towers/archer.png"  # No longer used; kept for subclass compat
 @export var projectile_scene: PackedScene = null  # subclasses can set their own
 
-var sprite: Sprite2D
+var sprite: Node2D
 var range_indicator: Line2D
 var cooldown_timer: float = 0.0
 var current_target: Node2D = null
@@ -28,12 +28,17 @@ var enemies_layer: Node2D = null
 
 func _ready() -> void:
 	add_to_group("towers")
-	# Sprite
+	# Body: Sprite2D with a 256x256 painterly circle texture, tinted to the
+	# tower type's color.
+	var tex_path := "res://assets/towers/%s.png" % tower_name.to_lower()
+	var tex := load(tex_path) as Texture2D
+	if tex == null:
+		tex = load("res://assets/towers/archer.png") as Texture2D
 	sprite = Sprite2D.new()
-	var tex := load(sprite_path) as Texture2D
-	if tex:
-		sprite.texture = tex
-	sprite.scale = Vector2(0.4, 0.4)  # 1024px sprite -> ~410px in game
+	sprite.texture = tex
+	sprite.modulate = _tower_color()
+	# Scale 256x256 source to 120px in world.
+	sprite.scale = Vector2(0.469, 0.469)
 	sprite.position = Vector2(0, 0)
 	add_child(sprite)
 	# Range indicator (hidden by default, shown on hover/tap)
@@ -52,6 +57,30 @@ func _process(delta: float) -> void:
 			cooldown_timer = cooldown_s
 	else:
 		current_target = null
+
+
+
+func _make_circle_points(radius: float) -> PackedVector2Array:
+	var points: PackedVector2Array = PackedVector2Array()
+	for i in 32:
+		var angle := TAU * i / 32
+		points.append(Vector2(cos(angle), sin(angle)) * radius)
+	return points
+
+func _make_circle_points_at_offset(radius: float, offset: Vector2) -> PackedVector2Array:
+	var points: PackedVector2Array = PackedVector2Array()
+	for i in 32:
+		var angle := TAU * i / 32
+		points.append(offset + Vector2(cos(angle), sin(angle)) * radius)
+	return points
+
+func _tower_color() -> Color:
+	match tower_name:
+		"Archer":    return Color(0.4, 0.6, 0.3, 1)
+		"Mage":      return Color(0.3, 0.4, 0.7, 1)
+		"Trebuchet": return Color(0.55, 0.45, 0.35, 1)
+		_: return Color(0.5, 0.5, 0.5)
+
 
 func _acquire_target() -> void:
 	if current_target and is_instance_valid(current_target):
