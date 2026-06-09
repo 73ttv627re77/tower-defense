@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chqipdw4jt0ku"
-path="res://.godot/imported/mage.jpg-73aea2ba87ba16b67d0fcedaa83258a0.ctex"
+uid="uid://ca28kebhl1yoi"
+path="res://.godot/imported/skeleton.png-534ec709bd0b2490c95bbe32e79208da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/towers/mage.jpg"
-dest_files=["res://.godot/imported/mage.jpg-73aea2ba87ba16b67d0fcedaa83258a0.ctex"]
+source_file="res://assets/enemies/skeleton.png"
+dest_files=["res://.godot/imported/skeleton.png-534ec709bd0b2490c95bbe32e79208da.ctex"]
 
 [params]
 

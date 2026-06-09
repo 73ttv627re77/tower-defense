@@ -12,4 +12,4 @@ func _init() -> void:
 	cooldown_s = 1.2
 	projectile_speed = 700.0
 	projectile_color = Color(0.85, 0.75, 0.45, 1.0)
-	sprite_path = "res://assets/towers/archer.jpg"
+	sprite_path = "res://assets/towers/archer.png"

@@ -9,4 +9,4 @@ func _init() -> void:
 	speed_px_per_s = 70.0
 	gold_reward = 8
 	leak_damage = 1
-	sprite_path = "res://assets/enemies/skeleton.jpg"
+	sprite_path = "res://assets/enemies/skeleton.png"

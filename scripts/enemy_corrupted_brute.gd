@@ -11,7 +11,7 @@ func _init() -> void:
 	speed_px_per_s = 40.0
 	gold_reward = 50
 	leak_damage = 5
-	sprite_path = "res://assets/enemies/corrupted_brute.jpg"
+	sprite_path = "res://assets/enemies/corrupted_brute.png"
 	scale_factor = 0.32
 
 func _die() -> void:

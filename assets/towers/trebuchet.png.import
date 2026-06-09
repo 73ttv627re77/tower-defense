@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mnb0l8opgpkh"
-path="res://.godot/imported/harpy.jpg-e6080a3901d6b18c8582c4ef0c159c91.ctex"
+uid="uid://dl2ivk0uq3ska"
+path="res://.godot/imported/trebuchet.png-2e5362d2f31b07c3286e67dd56266509.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/harpy.jpg"
-dest_files=["res://.godot/imported/harpy.jpg-e6080a3901d6b18c8582c4ef0c159c91.ctex"]
+source_file="res://assets/towers/trebuchet.png"
+dest_files=["res://.godot/imported/trebuchet.png-2e5362d2f31b07c3286e67dd56266509.ctex"]
 
 [params]
 

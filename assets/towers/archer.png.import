@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://032d3wgdj65m"
-path="res://.godot/imported/corrupted_brute.jpg-6031119398a98aa2575b94de31c140cf.ctex"
+uid="uid://by4i7aeklcy75"
+path="res://.godot/imported/archer.png-68e6d937ff469b7f764c82944e4ca14e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/corrupted_brute.jpg"
-dest_files=["res://.godot/imported/corrupted_brute.jpg-6031119398a98aa2575b94de31c140cf.ctex"]
+source_file="res://assets/towers/archer.png"
+dest_files=["res://.godot/imported/archer.png-68e6d937ff469b7f764c82944e4ca14e.ctex"]
 
 [params]
 

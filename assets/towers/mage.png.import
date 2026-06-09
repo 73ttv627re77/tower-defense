@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drk3tr8fo1hug"
-path="res://.godot/imported/gnoll.jpg-faf33872ce2500082372b82c0ba55ae4.ctex"
+uid="uid://mhbuifmpsbb8"
+path="res://.godot/imported/mage.png-ab7d978b92bc27717f9c555986b4b5c8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/gnoll.jpg"
-dest_files=["res://.godot/imported/gnoll.jpg-faf33872ce2500082372b82c0ba55ae4.ctex"]
+source_file="res://assets/towers/mage.png"
+dest_files=["res://.godot/imported/mage.png-ab7d978b92bc27717f9c555986b4b5c8.ctex"]
 
 [params]
 

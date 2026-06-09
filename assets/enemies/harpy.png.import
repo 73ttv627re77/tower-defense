@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s3sttqg63r4v"
-path="res://.godot/imported/mossbeast.jpg-1e8930610f88b0419d7d16cbc482675c.ctex"
+uid="uid://dnarqxeydukw3"
+path="res://.godot/imported/harpy.png-707259b47a3ca177a947a0469bcbcd1e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemies/mossbeast.jpg"
-dest_files=["res://.godot/imported/mossbeast.jpg-1e8930610f88b0419d7d16cbc482675c.ctex"]
+source_file="res://assets/enemies/harpy.png"
+dest_files=["res://.godot/imported/harpy.png-707259b47a3ca177a947a0469bcbcd1e.ctex"]
 
 [params]
 

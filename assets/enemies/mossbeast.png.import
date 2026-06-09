@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjds2dlip3d05"
-path="res://.godot/imported/archer.jpg-e8ac0d0968000b3d4a137523a398f0a8.ctex"
+uid="uid://cp8gub580t4ii"
+path="res://.godot/imported/mossbeast.png-0e17543edd8add04ccc4e675d1e6978c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/towers/archer.jpg"
-dest_files=["res://.godot/imported/archer.jpg-e8ac0d0968000b3d4a137523a398f0a8.ctex"]
+source_file="res://assets/enemies/mossbeast.png"
+dest_files=["res://.godot/imported/mossbeast.png-0e17543edd8add04ccc4e675d1e6978c.ctex"]
 
 [params]
 

@@ -14,7 +14,7 @@ func _init() -> void:
 	cooldown_s = 2.0
 	projectile_speed = 450.0
 	projectile_color = Color(0.4, 0.7, 1.0, 1.0)
-	sprite_path = "res://assets/towers/mage.jpg"
+	sprite_path = "res://assets/towers/mage.png"
 
 func _fire() -> void:
 	if not is_instance_valid(current_target):
