@@ -21,6 +21,7 @@ config/features=PackedStringArray("4.6")
 window/size/viewport_width=1024
 window/size/viewport_height=1792
 window/portrait=true
+window/handheld/orientation=1
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep"
 
